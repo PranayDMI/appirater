@@ -69,6 +69,7 @@ static BOOL _usesAnimation = TRUE;
 static UIStatusBarStyle _statusBarStyle;
 static BOOL _modalOpen = false;
 static BOOL _alwaysUseMainBundle = NO;
+static BOOL _showOnAppResignActive = NO;
 
 @interface Appirater ()
 @property (nonatomic, copy) NSString *alertTitle;
@@ -157,6 +158,9 @@ static BOOL _alwaysUseMainBundle = NO;
 }
 + (void)setAlwaysUseMainBundle:(BOOL)alwaysUseMainBundle {
     _alwaysUseMainBundle = alwaysUseMainBundle;
+}
++ (void)setShowOnAppResignActive:(BOOL)onActive {
+  _showOnAppResignActive = onActive;
 }
 
 + (NSBundle *)bundle
@@ -260,8 +264,10 @@ static BOOL _alwaysUseMainBundle = NO;
         dispatch_once(&onceToken, ^{
             appirater = [[Appirater alloc] init];
 			appirater.delegate = _delegate;
+          if (!_showOnAppResignActive) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive) name:
-                UIApplicationWillResignActiveNotification object:nil];
+             UIApplicationWillResignActiveNotification object:nil];
+          }
         });
 	}
 	

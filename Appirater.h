@@ -295,6 +295,12 @@ extern NSString *const kAppiraterReminderRequestDate;
  */
 + (void)setAlwaysUseMainBundle:(BOOL)useMainBundle;
 
+/*!
+ If set to YES, then App rate popup will display on phone lock/sleep. It won't get hide.
+Default is NO.
+ */
++ (void)setShowOnAppResignActive:(BOOL)onActive;
+
 @end
 
 
